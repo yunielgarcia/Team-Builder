@@ -1,9 +1,13 @@
+from django.conf import settings
 from django.db import models
+
 
 # Create your models here.
 
 
 class Project(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             related_name="projects")
     title = models.CharField(max_length=140)
     description = models.TextField()
 
