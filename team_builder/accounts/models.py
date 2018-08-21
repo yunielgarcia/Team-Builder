@@ -8,16 +8,13 @@ from django.utils import timezone
 
 
 class UserManager(BaseUserManager):
-    def create_user(self, email, username, display_name=None, password=None):
+    def create_user(self, email, display_name=None, password=None):
         if not email:
             raise ValueError("Users must have an email address")
-        if not display_name:
-            display_name = username
 
         user = self.model(
             email=self.normalize_email(email),
-            username=username,
-            display_name=display_name
+            display_name=display_name,
         )
         user.set_password(password)
         user.save()
@@ -38,7 +35,6 @@ class UserManager(BaseUserManager):
 
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
-    username = models.CharField(max_length=40, unique=True)
     display_name = models.CharField(max_length=140)
     bio = models.CharField(max_length=140, blank=True, default="")
     avatar = models.ImageField(blank=True, null=True)

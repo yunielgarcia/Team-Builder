@@ -6,8 +6,10 @@
     <form method="POST">
         {% csrf_token %}
         {{ form.as_p }}
-        <button class="button-primary">Sign In</button>
-        <input type="submit" value="Sign Up" class="btn btn-default">
+        <input type="submit" value="Sign In" class="btn btn-default">
+        <a href="{% url 'accounts:signup' %}">
+            <button type="button" class="button-primary">Sign Up</button>
+        </a>
     </form>
 </div>
 {% endblock %}

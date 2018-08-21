@@ -15,10 +15,17 @@ class Project(models.Model):
         return self.title
 
 
-class Position(models.Model):
-    title = models.CharField(max_length=40)
-    description = models.TextField()
-    project = models.ForeignKey(Project, related_name='positions')
+class Skill(models.Model):
+    name = models.CharField(max_length=40)
 
     def __str__(self):
-        return self.title
+        return self.name
+
+
+class Position(models.Model):
+    description = models.TextField()
+    project = models.ForeignKey(Project, related_name='positions')
+    skill = models.OneToOneField(Skill)
+
+    def __str__(self):
+        return self.skill
