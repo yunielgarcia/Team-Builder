@@ -24,3 +24,6 @@ class CreateProject(LoginRequiredMixin, generic.CreateView):
         self.object.user = self.request.user
         self.object.save()
         return super().form_valid(form)
+
+
+# todo: Making profile view

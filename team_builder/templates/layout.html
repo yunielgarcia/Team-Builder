@@ -55,6 +55,7 @@
                     <ul class="circle--inline">
                         {% if user.is_authenticated %}
 						<li><a href="{% url 'accounts:logout' %}" class="btn btn-simple">Log out</a></li>
+						<li><a href="#" class="btn btn-simple">My Account</a></li>
 						{% else %}
 						<li><a href="{% url 'login' %}" class="btn btn-simple">Log in</a></li>
 						<li><a href="{% url 'accounts:signup' %}" class="btn btn-simple">Sign up</a></li>
