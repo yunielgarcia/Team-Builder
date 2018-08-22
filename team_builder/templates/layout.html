@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 {% load static from staticfiles %}
 <html lang="en">
@@ -37,7 +36,7 @@
     <div class="bounds">
         <div class="circle--fluid">
             <div class="circle--fluid--cell">
-                <h1 class="hide-text circle--logo"><a class="logo" href="{% url 'home' %}" >Circle</a></h1>
+                <h1 class="hide-text circle--logo"><a class="logo" href="{% url 'home' %}">Circle</a></h1>
             </div>
             <div class="circle--fluid--cell circle--fluid--primary">
                 <div class="circle--search">
@@ -54,18 +53,36 @@
                 <nav>
                     <ul class="circle--inline">
                         {% if user.is_authenticated %}
-						<li><a href="{% url 'accounts:logout' %}" class="btn btn-simple">Log out</a></li>
-						<li><a href="#" class="btn btn-simple">My Account</a></li>
-						{% else %}
-						<li><a href="{% url 'login' %}" class="btn btn-simple">Log in</a></li>
-						<li><a href="{% url 'accounts:signup' %}" class="btn btn-simple">Sign up</a></li>
-						{% endif %}
+                        <li><a href="{% url 'accounts:logout' %}" class="btn btn-simple">Log out</a></li>
+                        {% else %}
+                        <li><a href="{% url 'login' %}" class="btn btn-simple">Log in</a></li>
+                        <li><a href="{% url 'accounts:signup' %}" class="btn btn-simple">Sign up</a></li>
+                        {% endif %}
                     </ul>
                 </nav>
             </div>
         </div>
     </div>
 </header>
-  {% block body_content %}{% endblock %}
+{% if user.is_authenticated %}
+<div class="circle--actions--bar">
+    <nav class="bounds">
+        <ul class="circle--pill--list">
+            <li>
+                <a class="{% if request.path == '/accounts/applications/' %} selected {% endif %}" href="applications.html">
+                    Applications
+                </a>
+            </li>
+            <li>
+                <a class="{% if request.path == '/accounts/profile/' %} selected {% endif %}"
+                   href="{% url 'accounts:profile' %}">
+                    Profile
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+{% endif %}
+{% block body_content %}{% endblock %}
 </body>
 </html>

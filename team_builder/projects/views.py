@@ -26,4 +26,3 @@ class CreateProject(LoginRequiredMixin, generic.CreateView):
         return super().form_valid(form)
 
 
-# todo: Making profile view

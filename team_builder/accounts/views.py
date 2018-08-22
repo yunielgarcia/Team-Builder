@@ -2,6 +2,7 @@ from django.contrib.auth import logout
 from .forms import UserCreateForm
 from django.views import generic
 from django.core.urlresolvers import reverse_lazy
+from . import models
 
 
 class SignUpView(generic.CreateView):
@@ -16,3 +17,13 @@ class LogoutView(generic.RedirectView):
     def get(self, request, *args, **kwargs):
         logout(request)
         return super().get(request, *args, **kwargs)
+
+
+class ProfileView(generic.DetailView):
+    model = models.User
+    template_name = "accounts/profile.html"
+
+    def get_object(self, queryset=None):
+        return self.get_queryset().get(
+            pk=self.request.user.pk
+        )
