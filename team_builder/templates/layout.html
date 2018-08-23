@@ -75,7 +75,7 @@
             </li>
             <li>
                 <a class="{% if request.path == '/accounts/profile/' %} selected {% endif %}"
-                   href="{% url 'accounts:profile' %}">
+                   href="{% url 'accounts:profile' pk=user.pk %}">
                     Profile
                 </a>
             </li>

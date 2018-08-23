@@ -3,6 +3,7 @@ from django.contrib.auth.models import (
     BaseUserManager,
     PermissionsMixin
 )
+from django.urls import reverse
 from django.db import models
 from django.utils import timezone
 
@@ -37,7 +38,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
     display_name = models.CharField(max_length=140)
     bio = models.CharField(max_length=140, blank=True, default="")
-    avatar = models.ImageField(blank=True, null=True)
+    avatar = models.ImageField(upload_to='avatar_pics', blank=True, null=True)
     date_joined = models.DateTimeField(default=timezone.now)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
@@ -55,3 +56,6 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def get_long_name(self):
         return "{} (@{})".format(self.display_name, self.username)
+
+    def get_absolute_url(self):
+        return reverse('accounts:profile', kwargs={'pk': self.pk})

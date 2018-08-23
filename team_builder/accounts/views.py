@@ -1,6 +1,9 @@
 from django.contrib.auth import logout
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import redirect
 from .forms import UserCreateForm
 from django.views import generic
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.urlresolvers import reverse_lazy
 from . import models
 
@@ -19,7 +22,7 @@ class LogoutView(generic.RedirectView):
         return super().get(request, *args, **kwargs)
 
 
-class ProfileView(generic.DetailView):
+class ProfileDetailView(generic.DetailView):
     model = models.User
     template_name = "accounts/profile.html"
 
@@ -27,3 +30,22 @@ class ProfileView(generic.DetailView):
         return self.get_queryset().get(
             pk=self.request.user.pk
         )
+
+
+@login_required
+def account_redirect(request):
+    return redirect('accounts:profile', pk=request.user.pk)
+
+
+class ProfileEditView(LoginRequiredMixin, generic.UpdateView):
+    model = models.User
+    template_name_suffix = '_update_form'
+    fields = [
+        'display_name',
+        'bio',
+        'avatar'
+    ]
+
+    def get_success_url(self):
+        return self.request.user.get_absolute_url()
+
