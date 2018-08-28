@@ -1,4 +1,5 @@
 {% extends "layout.html" %}
+{% load static %}
 
 {% block body_content %}
 <div class="bounds circle--page">
@@ -58,18 +59,16 @@
 
         <div class="circle--secondary--module">
             <div class="circle--primary--avatar">
-
+                <img src="{% static '/media/' %}{{ user.avatar }}" alt="my image" width="100%" />
             </div>
         </div>
 
         <div class="circle--secondary--module">
             <h4>My Skills</h4>
             <ul class="unloaded">
-                <li>Skill 1</li>
-                <li>Skill 2</li>
-                <li>Skill 3</li>
-                <li>Skill 4</li>
-                <li>Skill 5</li>
+                {% for user_skill in user.user_skill_rel.all %}
+                    <li>{{ user_skill.skill }}</li>
+                {% endfor %}
             </ul>
         </div>
 

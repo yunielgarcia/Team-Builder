@@ -25,6 +25,7 @@ class LogoutView(generic.RedirectView):
 class ProfileDetailView(generic.DetailView):
     model = models.User
     template_name = "accounts/profile.html"
+    prefetch_related = ["user_skill_set"]
 
     def get_object(self, queryset=None):
         return self.get_queryset().get(

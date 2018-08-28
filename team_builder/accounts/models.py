@@ -63,3 +63,24 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def get_absolute_url(self):
         return reverse('accounts:profile', kwargs={'pk': self.pk})
+
+
+class Skill(models.Model):
+    name = models.CharField(max_length=40)
+
+    def __str__(self):
+        return self.name
+
+
+class UserSkill(models.Model):
+    skill = models.ForeignKey(Skill,
+                              on_delete=models.CASCADE,
+                              related_name='user_skill_rel')
+    user = models.ForeignKey(User,
+                             related_name='user_skill_rel')
+
+    def __str__(self):
+        return '{} - {}'.format(
+            self.user.username,
+            self.skill
+        )

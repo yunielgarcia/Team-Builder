@@ -69,12 +69,12 @@
     <nav class="bounds">
         <ul class="circle--pill--list">
             <li>
-                <a class="{% if request.path == '/accounts/applications/' %} selected {% endif %}" href="applications.html">
+                <a class="{% if '/accounts/applications/' in request.path %} selected {% endif %}" href="applications.html">
                     Applications
                 </a>
             </li>
             <li>
-                <a class="{% if request.path == '/accounts/profile/' %} selected {% endif %}"
+                <a class="{% if '/accounts/profile/' in request.path %} selected {% endif %}"
                    href="{% url 'accounts:profile' pk=user.pk %}">
                     Profile
                 </a>
