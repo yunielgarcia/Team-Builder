@@ -41,7 +41,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
     username = models.CharField(max_length=40, unique=True, null=True)
     display_name = models.CharField(max_length=140)
-    bio = models.CharField(max_length=140, blank=True, default="")
+    bio = models.TextField(max_length=140, blank=True, default="")
     avatar = models.ImageField(upload_to='avatar_pics', blank=True, null=True)
     date_joined = models.DateTimeField(default=timezone.now)
     is_active = models.BooleanField(default=True)
