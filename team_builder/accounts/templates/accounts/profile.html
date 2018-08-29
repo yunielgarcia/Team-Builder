@@ -14,15 +14,15 @@
 
     <div class="grid-70">
         <h1>{% if user.display_name %}
-                {{ user.display_name }}
+            {{ user.display_name }}
             {% else %}
-                Your name (edit to add)
+            Your name (edit to add)
             {% endif %}</h1>
         <div class="circle--article--body">
             {% if user.bio %}
-                {{ user.bio }}
+            {{ user.bio }}
             {% else %}
-                Your bio (edit to add)
+            Your bio (edit to add)
             {% endif %}
         </div>
 
@@ -35,22 +35,20 @@
             </tr>
             </thead>
             <tbody>
+            {% for project in user.projects.all %}
+            {% if project.concluded %}
             <tr class="clickable-row" data-href="project.html">
                 <td>
-                    <h3>Invoice Delivery Tool</h3>
+                    <h3>{{ project.title }}</h3>
                 </td>
                 <td class="circle--cell--right">
-                    <span class="secondary-label">Rails Developer</span>
+                    {% for position in project.positions.all %}
+                    <span class="secondary-label">{{ position }}</span>
+                    {% endfor %}
                 </td>
             </tr>
-            <tr class="clickable-row" data-href="project.html">
-                <td>
-                    <h3>Twitter Client</h3>
-                </td>
-                <td class="circle--cell--right">
-                    <span class="secondary-label">Designer</span>
-                </td>
-            </tr>
+            {% endif %}
+            {% endfor %}
             </tbody>
         </table>
     </div>
@@ -59,7 +57,7 @@
 
         <div class="circle--secondary--module">
             <div class="circle--primary--avatar">
-                <img src="{% static '/media/' %}{{ user.avatar }}" alt="my image" width="100%" />
+                <img src="{% static '/media/' %}{{ user.avatar }}" alt="my image" width="100%"/>
             </div>
         </div>
 
@@ -67,7 +65,7 @@
             <h4>My Skills</h4>
             <ul class="unloaded">
                 {% for user_skill in user.user_skill_rel.all %}
-                    <li>{{ user_skill.skill }}</li>
+                <li>{{ user_skill.skill }}</li>
                 {% endfor %}
             </ul>
         </div>
@@ -76,7 +74,9 @@
             <h4>My Projects</h4>
             <ul class="circle--link--list">
                 {% for project in user.projects.all %}
-                    <li><a href="#">{{ project.title }}</a></li>
+                {% if not project.concluded %}
+                <li><a href="#">{{ project.title }}</a></li>
+                {% endif %}
                 {% endfor %}
             </ul>
         </div>

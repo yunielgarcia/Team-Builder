@@ -11,6 +11,7 @@ class Project(models.Model):
                              related_name="projects")
     title = models.CharField(max_length=140)
     description = models.TextField()
+    concluded = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title
@@ -22,4 +23,4 @@ class Position(models.Model):
     project = models.ForeignKey(Project, related_name='positions')
 
     def __str__(self):
-        return self.skill
+        return self.skill.name
