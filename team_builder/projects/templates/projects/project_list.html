@@ -44,7 +44,7 @@
             <tbody>
 
             {% for project in project_list %}
-            <tr class="clickable-row" data-href="project.html">
+            <tr class="clickable-row" data-href="{% url 'projects:detail_project' pk=project.pk %}">
                 <td>
                     <h3>{{ project.title }}</h3>
                 </td>

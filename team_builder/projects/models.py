@@ -7,8 +7,8 @@ from accounts.models import Skill
 
 
 class Project(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL,
-                             related_name="projects")
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL,
+                              related_name="projects")
     title = models.CharField(max_length=140)
     description = models.TextField()
     concluded = models.BooleanField(default=False)
@@ -24,6 +24,16 @@ class Position(models.Model):
     skill = models.ForeignKey(Skill, related_name='positions')
     description = models.TextField()
     project = models.ForeignKey(Project, related_name='positions')
+    filled = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.skill.name
+        return self.position_title
+
+
+class Application(models.Model):
+    project = models.ForeignKey(Project, related_name='applications')
+    candidate = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='applications')
+    status = models.CharField(max_length=30, default='processing')
+
+    def __str__(self):
+        return '{}-{} application'.format(self.project, self.candidate)

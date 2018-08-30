@@ -12,6 +12,11 @@ class AllProjects(LoginRequiredMixin, generic.ListView):
     prefetch_related = ["position_set"]
 
 
+class ProjectDetailView(LoginRequiredMixin, generic.DetailView):
+    model = models.Project
+    prefetch_related = ["positions", "applications"]
+
+
 class CreateProjectPositionView(LoginRequiredMixin, generic.CreateView):
     form_class = forms.ProjectForm
     model = models.Project
@@ -30,7 +35,7 @@ class CreateProjectPositionView(LoginRequiredMixin, generic.CreateView):
         positionsFormSet = context['positions']
         with transaction.atomic():
             self.object = form.save(commit=False)
-            self.object.user = self.request.user
+            self.object.owner = self.request.user
             self.object.save()
 
             if positionsFormSet.is_valid():
