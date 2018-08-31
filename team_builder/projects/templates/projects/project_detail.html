@@ -32,7 +32,7 @@
                             <h3>{{ position.position_title }}</h3>
                             <p>{{ position.description }}</p>
                             {% if user != project.owner %}
-                                {% if not user.applications__project == project %}
+                                {% if user__applications.length %}
                                     <a class="button button-primary">Apply</a>
 
                                 {% endif %}

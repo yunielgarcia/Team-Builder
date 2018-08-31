@@ -35,4 +35,4 @@ class PositionForm(forms.ModelForm):
 
 
 PositionFormSet = inlineformset_factory(models.Project, models.Position,
-                                        form=PositionForm, extra=1)
+                                        form=PositionForm)

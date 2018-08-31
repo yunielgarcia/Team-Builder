@@ -22,7 +22,7 @@ class Project(models.Model):
 class Position(models.Model):
     position_title = models.CharField(max_length=40)
     skill = models.ForeignKey(Skill, related_name='positions')
-    description = models.TextField()
+    description = models.TextField(default='')
     project = models.ForeignKey(Project, related_name='positions')
     filled = models.BooleanField(default=False)
 
@@ -31,7 +31,7 @@ class Position(models.Model):
 
 
 class Application(models.Model):
-    project = models.ForeignKey(Project, related_name='applications')
+    position = models.ForeignKey(Position, related_name='applications')
     candidate = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='applications')
     status = models.CharField(max_length=30, default='processing')
 
