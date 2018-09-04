@@ -27,7 +27,7 @@ class CreateProjectPositionView(LoginRequiredMixin, generic.CreateView):
         data = super(CreateProjectPositionView, self).get_context_data(**kwargs)
         if self.request.POST:
             import pdb;pdb.set_trace()
-            data['positions'] = forms.PositionFormSet(self.request.POST)
+            data['positions'] = forms.PositionFormSet(data=self.request.POST)
         else:
             data['positions'] = forms.PositionFormSet()
         return data
