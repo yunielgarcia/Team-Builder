@@ -14,7 +14,7 @@ class AllProjects(LoginRequiredMixin, PrefetchRelatedMixin, generic.ListView):
 
 class ProjectDetailView(LoginRequiredMixin, PrefetchRelatedMixin, generic.DetailView):
     model = models.Project
-    prefetch_related = ["positions", "applications"]
+    prefetch_related = ["positions"]
 
 
 class CreateProjectPositionView(LoginRequiredMixin, generic.CreateView):
