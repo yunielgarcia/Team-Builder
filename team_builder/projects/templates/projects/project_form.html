@@ -24,17 +24,14 @@
             <div class="circle--project--positions">
                 <h2>Positions</h2>
 
-                <ul class="circle--group--list circle--clone--list">
+                <ul id="position_forms" class="circle--group--list circle--clone--list">
                     {{ positions.management_form }}
-                    {% for form in positions.forms %}
-                    <li>
-                        <!--{% for field in form %}-->
-                            <!--{{ field.label_tag }} {{ field }}-->
-                        <!--{% endfor %}-->
-                        {{ form }}
-                        <br>
-                        <a class="circle--clone--add">Add Position</a>
-                        <a class="circle--clone--remove">Remove</a>
+                    {% for pos_form in positions.forms %}
+                    <li class="position_forms">
+                        {% if pos_form.instance.pk %}{{ pos_form.DELETE }}{% endif %}
+                        {{ pos_form.position_title }}
+                        {{ pos_form.skill }}
+                        {{ pos_form.description }}
                     </li>
                     {% endfor %}
                 </ul>
@@ -58,5 +55,15 @@
         </div>
     </div>
 </form>
+
+<script>
+    $('.position_forms').formset({
+        addText: 'Add Position',
+        deleteText: 'Remove',
+        addCssClass: 'circle--clone--add',
+        deleteCssClass: 'circle--clone--remove',
+        prefix: '{{ positions.prefix }}'
+    });
+</script>
 
 {% endblock %}

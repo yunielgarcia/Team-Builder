@@ -10,6 +10,10 @@ $( document ).ready(function() {
     parent.after(copy);
     copy.find("input, textarea, select").val("");
     copy.find("*:first-child").focus();
+    // var total = $('#id_' + 'positions' + '-TOTAL_FORMS').val();
+    // total++;
+    // $('#id_' + 'positions' + '-TOTAL_FORMS').val(total);
+
   });
 
   $(".circle--clone--list").on("click", "li:not(:only-child) .circle--clone--remove", function(){

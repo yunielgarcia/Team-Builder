@@ -28,6 +28,7 @@
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
     <script type="text/javascript" src="{% static 'js/autogrow.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/global.js' %}"></script>
+    <script type="text/javascript" src="{% static 'media/jquery.formset.js' %}"></script>
 
 
 </head>
@@ -69,7 +70,8 @@
     <nav class="bounds">
         <ul class="circle--pill--list">
             <li>
-                <a class="{% if '/accounts/applications/' in request.path %} selected {% endif %}" href="applications.html">
+                <a class="{% if '/accounts/applications/' in request.path %} selected {% endif %}"
+                   href="applications.html">
                     Applications
                 </a>
             </li>

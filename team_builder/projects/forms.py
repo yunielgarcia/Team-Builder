@@ -34,5 +34,16 @@ class PositionForm(forms.ModelForm):
         )
 
 
-PositionFormSet = inlineformset_factory(models.Project, models.Position,
-                                        form=PositionForm, extra=1)
+# class BaseInlinePositionFormSet(forms.BaseInlineFormSet):
+
+    # def __init__(self, *args, **kwargs):
+    #     super().__init__(*args, **kwargs)
+    #     if self.queryset is None:  # this is odd !!!
+    #         self.queryset = models.Position.objects.none()
+
+
+PositionFormSet = inlineformset_factory(models.Project,
+                                        models.Position,
+                                        form=PositionForm,
+                                        extra=1,
+                                        can_delete=True)

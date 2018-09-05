@@ -1,4 +1,3 @@
-from django.db import transaction
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.urlresolvers import reverse_lazy
 from . import forms
@@ -26,10 +25,10 @@ class CreateProjectPositionView(LoginRequiredMixin, generic.CreateView):
     def get_context_data(self, **kwargs):
         data = super(CreateProjectPositionView, self).get_context_data(**kwargs)
         if self.request.POST:
-            import pdb;pdb.set_trace()
-            data['positions'] = forms.PositionFormSet(data=self.request.POST)
+            data_post = self.request.POST
+            data['positions'] = forms.PositionFormSet(data_post, prefix='positions')
         else:
-            data['positions'] = forms.PositionFormSet()
+            data['positions'] = forms.PositionFormSet(prefix='positions')
         return data
 
     def form_valid(self, form):
@@ -41,17 +40,10 @@ class CreateProjectPositionView(LoginRequiredMixin, generic.CreateView):
             self.object.owner = self.request.user
             self.object.save()
 
-            # positions_form_set.instance = self.object
-            # positions_form_set.save()
             for position_form in positions_form_set:
-                # import pdb;
-                # pdb.set_trace()
-
                 if (position_form.cleaned_data.get('skill') and
                         position_form.cleaned_data.get('position_title')):
                     position_obj = position_form.save(commit=False)
                     position_obj.project = self.object
                     position_obj.save()
-        else:
-            return self.render_to_response(self.get_context_data(form=form))
         return super(CreateProjectPositionView, self).form_valid(form)
