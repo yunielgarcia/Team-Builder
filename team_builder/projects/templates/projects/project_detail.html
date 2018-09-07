@@ -1,4 +1,5 @@
 {% extends "layout.html" %}
+{% load project_extras %}
 
 {% block body_content %}
     {% if user == project.owner %}
@@ -16,7 +17,15 @@
             <div class="circle--article--header">
                 <h4 class="circle--article--section">Project</h4>
                 <h1 class="circle--article--title">{{ project.title }}</h1>
-                <p class="circle--article--byline">Project Owner: <a>{{ project.owner.display_name }}</a></p>
+                <p class="circle--article--byline">Project Owner:
+                    <a>
+                        {% if project.owner.display_name %}
+                        {{ project.owner.display_name }}
+                        {% else %}
+                        {{ project.owner }}
+                        {% endif %}
+                    </a>
+                </p>
             </div>
 
             <div class="circle--article--body">
@@ -32,11 +41,9 @@
                             <h3>{{ position.position_title }}</h3>
                             <p>{{ position.description }}</p>
                             {% if user != project.owner %}
-                                {% if user__applications.length %}
-                                    <a class="button button-primary">Apply</a>
 
-                                {% endif %}
-                            <!--todo: here-->
+                            {% apply_buttons position %}
+
                             {% endif %}
                         </li>
                     {% endfor %}
@@ -58,12 +65,12 @@
 
         <div class="circle--secondary--module">
             <h3>Project Timeline</h3>
-            <p>10 hours</p>
+            <p>{{ project.time_line_description }}</p>
         </div>
 
         <div class="circle--secondary--module">
             <h3>Applicant Requirements</h3>
-            <p>Applicants are required to work from our headquarters located in Antarctica.</p>
+            <p>{{ project.applicant_req }}</p>
         </div>
 
     </div>

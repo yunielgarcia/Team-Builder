@@ -20,7 +20,9 @@ class ProjectDetailView(LoginRequiredMixin, PrefetchRelatedMixin, generic.Detail
 class CreateProjectPositionView(LoginRequiredMixin, generic.CreateView):
     form_class = forms.ProjectForm
     model = models.Project
-    success_url = reverse_lazy('projects:all')  # todo: change to detailView
+
+    def get_success_url(self):
+        return reverse_lazy('projects:detail_project', kwargs={'pk': self.object.pk})
 
     def get_context_data(self, **kwargs):
         data = super(CreateProjectPositionView, self).get_context_data(**kwargs)

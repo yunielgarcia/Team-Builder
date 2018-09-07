@@ -27,7 +27,7 @@ class Position(models.Model):
     filled = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.position_title
+        return "{}-{}".format(self.position_title, self.project)
 
 
 class Application(models.Model):
@@ -36,4 +36,4 @@ class Application(models.Model):
     status = models.CharField(max_length=30, default='processing')
 
     def __str__(self):
-        return '{}-{} application'.format(self.project, self.candidate)
+        return '{}-{} application'.format(self.position.position_title, self.candidate)
