@@ -3,5 +3,7 @@
 {% elif already_apply %}
 <a class="button button-primary">Processing</a>
 {% else %}
-<a class="button button-primary">Apply</a>
+<a class="button button-primary"
+   href="{% url 'projects:apply' pk=position.project.pk position_pk=position.pk %}">
+    Apply</a>
 {% endif %}
