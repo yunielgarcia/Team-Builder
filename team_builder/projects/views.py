@@ -128,7 +128,11 @@ class CreateApplicationView(LoginRequiredMixin, generic.RedirectView):
             return super().get(request, *args, **kwargs)
 
 
-class AllApplications(LoginRequiredMixin, generic.ListView):
+class AllApplications(LoginRequiredMixin, PrefetchRelatedMixin, generic.ListView):
     model = models.Application
-    # prefetch_related = ["positions"]
+    prefetch_related = ["candidate", "position"]
 
+    def get_queryset(self):
+        return models.Application.objects.filter(
+            position__project__owner=self.request.user
+        )

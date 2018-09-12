@@ -5,7 +5,7 @@
         <div class="circle--page--header circle--fluid">
             <div class="circle--fluid--cell circle--fluid--primary">
                 <h2>Applications</h2>
-            </div>>
+            </div>
         </div>
 
         <div class="grid-25">
@@ -26,26 +26,30 @@
             <table class="u-full-width circle--table">
                 <thead>
                 <tr>
-                    <th>Project Title</th>
-                    <th class="circle--cell--right">Project Needs</th>
+                    <th>Applicant</th>
+                    <th class="circle--cell--right">Applicant Position</th>
                 </tr>
                 </thead>
                 <tbody>
 
-{#                {% for project in project_list %}#}
-{#                    <tr class="clickable-row" data-href="{% url 'projects:detail_project' pk=project.pk %}">#}
-{#                        <td>#}
-{#                            <h3>{{ project.title }}</h3>#}
-{#                        </td>#}
-{##}
-{#                        <td class="circle--cell--right">#}
-{#                            {% for position in project.positions.all %}#}
-{#                                <p class="secondary-label">{{ position.position_title }}</p>#}
-{#                            {% endfor %}#}
-{#                        </td>#}
-{##}
-{#                    </tr>#}
-{#                {% endfor %}#}
+                {% for application in application_list %}
+                    <tr class="clickable-row" data-href="#">
+                        <td>
+                            <h3>{{ application.candidate.username }}</h3>
+                            {% for skill in application.candidate.user_skill_rel.all %}
+                                <p>{{ skill.skill }}</p>
+                            {% endfor %}
+
+                        </td>
+
+                        <td class="circle--cell--right">
+                            {% for position in project.positions.all %}
+                                <p class="secondary-label">{{ position.position_title }}</p>
+                            {% endfor %}
+                        </td>
+
+                    </tr>
+                {% endfor %}
 
 
                 </tbody>
