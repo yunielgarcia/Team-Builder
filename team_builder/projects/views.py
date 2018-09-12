@@ -133,6 +133,11 @@ class AllApplications(LoginRequiredMixin, PrefetchRelatedMixin, generic.ListView
     prefetch_related = ["candidate", "position"]
 
     def get_queryset(self):
-        return models.Application.objects.filter(
-            position__project__owner=self.request.user
-        )
+        if self.request.GET.get('p'):
+            return models.Application.objects.filter(
+                position__project__pk=self.request.GET.get('p')
+            )
+        else:
+            return models.Application.objects.filter(
+                position__project__owner=self.request.user
+            )
