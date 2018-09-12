@@ -4,7 +4,7 @@ from . import views
 
 urlpatterns = [
     url(
-        r"^$", views.AllProjects.as_view(), name="all"
+        r"all", views.AllProjects.as_view(), name="all"
     ),
     url(
         r"(?P<pk>\d+)$",
@@ -22,4 +22,7 @@ urlpatterns = [
         r"(?P<pk>\d+)/edit$",
         views.UpdateProjectPositionView.as_view(),
         name="edit_project"),
+    url(
+        r"applications/$", views.AllApplications.as_view(), name="applications"
+    ),
 ]

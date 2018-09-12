@@ -13,6 +13,14 @@ class AllProjects(LoginRequiredMixin, PrefetchRelatedMixin, generic.ListView):
     model = models.Project
     prefetch_related = ["positions"]
 
+    def get_queryset(self):
+        if not self.request.GET.get('q'):
+            return models.Project.objects.all()
+        else:
+            return models.Project.objects.filter(
+                title__icontains=self.request.GET.get('q')
+            )
+
 
 class ProjectDetailView(LoginRequiredMixin, PrefetchRelatedMixin, generic.DetailView):
     model = models.Project
@@ -118,3 +126,9 @@ class CreateApplicationView(LoginRequiredMixin, generic.RedirectView):
                 position=position,
                 candidate=self.request.user)
             return super().get(request, *args, **kwargs)
+
+
+class AllApplications(LoginRequiredMixin, generic.ListView):
+    model = models.Application
+    # prefetch_related = ["positions"]
+
