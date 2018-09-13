@@ -3,8 +3,9 @@ from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy, reverse
 
 from . import forms
+from django.shortcuts import get_object_or_404
 from django.views import generic
-from braces.views import PrefetchRelatedMixin
+from braces.views import PrefetchRelatedMixin, SelectRelatedMixin
 
 from . import models
 
@@ -125,7 +126,7 @@ class CreateApplicationView(LoginRequiredMixin, generic.RedirectView):
             models.Application.objects.create(
                 position=position,
                 candidate=self.request.user)
-            return super().get(request, *args, **kwargs)
+        return super().get(request, *args, **kwargs)
 
 
 class AllApplications(LoginRequiredMixin, PrefetchRelatedMixin, generic.ListView):
@@ -141,3 +142,26 @@ class AllApplications(LoginRequiredMixin, PrefetchRelatedMixin, generic.ListView
             return models.Application.objects.filter(
                 position__project__owner=self.request.user
             )
+
+
+class ApplicationsDetailView(LoginRequiredMixin, SelectRelatedMixin, generic.DetailView):
+    model = models.Application
+    select_related = ["candidate"]
+    # template_name = "application_detail.html"
+
+
+class AcceptRejectApplicationView(LoginRequiredMixin, generic.RedirectView):
+
+    def get_redirect_url(self, *args, **kwargs):
+        return reverse('projects:applications')
+
+    def get_object(self):
+        return get_object_or_404(models.Application, pk=self.kwargs.get('pk'))
+
+    def get(self, request, *args, **kwargs):
+        application = self.get_object()
+        decision = self.kwargs.get('decision')
+        application.status = decision
+        application.save()
+        return super().get(request, *args, **kwargs)
+

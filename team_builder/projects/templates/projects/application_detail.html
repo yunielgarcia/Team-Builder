@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+{% load static %}
+
+{% block body_content %}
+    <div class="bounds circle--page">
+        <div class="circle--page--header circle--fluid">
+            <div class="circle--fluid--cell circle--fluid--primary">
+                <h2>Candidate for position {{ application.position.position_title }}</h2>
+                <div class="circle--secondary--module">
+                    <div style="padding-top: 30px">
+                        <img src="{% static '/media/' %}{{ user.avatar }}" alt="my image" width="50px"/>
+
+                        <span>{{ application.candidate.display_name }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="circle--fluid-w-cell circle--fluid--secondary">
+                <a class="button icon-on-left"
+                   href="{% url 'projects:application_decision' pk=application.pk decision='Accepted' %}">
+                    Accept
+                </a>
+                <a class="button icon-on-left"
+                   href="{% url 'projects:application_decision' pk=application.pk decision='Rejected' %}">
+                    Reject
+                </a>
+            </div>
+        </div>
+
+        <div class="grid-70">
+
+            <div class="circle--article--body">
+                <h2>Biography</h2>
+                {% if application.candidate.bio %}
+                    {{ user.bio }}
+                {% else %}
+                    No bio yet
+                {% endif %}
+            </div>
+
+            <h2>Skills</h2>
+            <ul>
+                {% for skill_user in application.candidate.user_skill_rel.all %}
+                    <li>{{ skill_user.skill }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+
+    </div>
+{% endblock %}

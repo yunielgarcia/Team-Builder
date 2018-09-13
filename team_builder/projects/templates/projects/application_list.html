@@ -40,7 +40,7 @@
                 <tbody>
 
                 {% for application in application_list %}
-                    <tr class="clickable-row" data-href="#">
+                    <tr class="clickable-row" data-href="{% url 'projects:application_detail' pk=application.pk %}">
                         <td>
                             <h3>{{ application.candidate.username }}</h3>
                             {% for skill in application.candidate.user_skill_rel.all %}

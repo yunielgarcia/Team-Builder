@@ -7,7 +7,7 @@ urlpatterns = [
         r"all", views.AllProjects.as_view(), name="all"
     ),
     url(
-        r"(?P<pk>\d+)$",
+        r"(?P<pk>\d+)/detail/$",
         views.ProjectDetailView.as_view(),
         name="detail_project"),
     url(
@@ -25,4 +25,11 @@ urlpatterns = [
     url(
         r"applications/$", views.AllApplications.as_view(), name="applications"
     ),
+    url(
+        r"applications/(?P<pk>\d+)$", views.ApplicationsDetailView.as_view(), name="application_detail"
+    ),
+    url(
+        r"applications/(?P<pk>\d+)/decision/(?P<decision>\w+)$",
+        views.AcceptRejectApplicationView.as_view(),
+        name="application_decision"),
 ]

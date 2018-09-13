@@ -10,7 +10,13 @@ def apply_buttons(context, position):
     user_applications = models.Application.objects.filter(
         candidate=user
     )
+
+    position_list = [app.position for app in user_applications]
+    app_list = [app for app in user_applications]
+
     response = {"position": position, "already_apply": False}
-    if position in [app.position for app in user_applications]:
+    if position in position_list:
         response["already_apply"] = True
+        response["application"] = app_list[position_list.index(position)]
+        print(response['application'])
     return response
