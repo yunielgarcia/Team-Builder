@@ -1,6 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy, reverse
+from django.core.mail import send_mail
 
 from . import forms
 from django.shortcuts import get_object_or_404
@@ -163,5 +164,12 @@ class AcceptRejectApplicationView(LoginRequiredMixin, generic.RedirectView):
         decision = self.kwargs.get('decision')
         application.status = decision
         application.save()
+        send_mail(
+            'Decision',
+            'Your application has been {}'.format(decision),
+            'TeamBuilder.com',
+            [application.candidate.email],
+            fail_silently=False,
+        )
         return super().get(request, *args, **kwargs)
 

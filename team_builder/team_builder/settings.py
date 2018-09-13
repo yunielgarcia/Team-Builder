@@ -128,3 +128,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'assets', 'media')
 AUTH_USER_MODEL = "accounts.User"
 
 LOGIN_REDIRECT_URL = "accounts:redirect"
+
+EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
