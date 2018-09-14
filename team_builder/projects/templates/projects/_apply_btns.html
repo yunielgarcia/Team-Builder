@@ -1,7 +1,12 @@
-{% if position.filled %}
+{% if position.filled and application.candidate == user %}
+<a class="button button-primary">{{ application.status }}</a>
+
+{% elif position.filled %}
 <a class="button button-primary">Position Filled</a>
+
 {% elif already_apply %}
 <a class="button button-primary">{{ application.status }}</a>
+
 {% else %}
 <a class="button button-primary"
    href="{% url 'projects:apply' pk=position.project.pk position_pk=position.pk %}">

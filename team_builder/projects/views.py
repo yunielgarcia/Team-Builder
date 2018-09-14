@@ -163,6 +163,10 @@ class AcceptRejectApplicationView(LoginRequiredMixin, generic.RedirectView):
         application = self.get_object()
         decision = self.kwargs.get('decision')
         application.status = decision
+        if decision == 'Accepted':
+            application.position.filled = True
+            application.position.save()
+
         application.save()
         send_mail(
             'Decision',

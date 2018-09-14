@@ -14,7 +14,12 @@ def apply_buttons(context, position):
     position_list = [app.position for app in user_applications]
     app_list = [app for app in user_applications]
 
-    response = {"position": position, "already_apply": False}
+    response = {
+        "position": position,
+        "already_apply": False,
+        'user': user
+    }
+    # import pdb;pdb.set_trace()
     if position in position_list:
         response["already_apply"] = True
         response["application"] = app_list[position_list.index(position)]
