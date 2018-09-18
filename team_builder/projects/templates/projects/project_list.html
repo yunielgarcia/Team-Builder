@@ -25,11 +25,13 @@
                     {% for project in project_list %}
 
                         {% for position in project.positions.all %}
-                            <li class="secondary-label">
-                                <a href="{% url 'projects:detail_project' pk=project.pk %}">
-                                    {{ position.position_title }}
-                                </a>
-                            </li>
+                            {% if not position.filled %}
+                                <li class="secondary-label">
+                                    <a href="{% url 'projects:detail_project' pk=project.pk %}">
+                                        {{ position.position_title }}
+                                    </a>
+                                </li>
+                            {% endif %}
                         {% endfor %}
 
                     {% endfor %}
@@ -55,7 +57,9 @@
 
                         <td class="circle--cell--right">
                             {% for position in project.positions.all %}
-                                <p class="secondary-label">{{ position.position_title }}</p>
+                                {% if not position.filled %}
+                                    <p class="secondary-label">{{ position.position_title }}</p>
+                                {% endif %}
                             {% endfor %}
                         </td>
 

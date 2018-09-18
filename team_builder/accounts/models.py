@@ -66,6 +66,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 
 
+
 class Skill(models.Model):
     name = models.CharField(max_length=40)
 

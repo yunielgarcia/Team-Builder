@@ -161,19 +161,22 @@ class AcceptRejectApplicationView(LoginRequiredMixin, generic.RedirectView):
 
     def get(self, request, *args, **kwargs):
         application = self.get_object()
-        decision = self.kwargs.get('decision')
-        application.status = decision
-        if decision == 'Accepted':
-            application.position.filled = True
-            application.position.save()
 
-        application.save()
-        send_mail(
-            'Decision',
-            'Your application has been {}'.format(decision),
-            'TeamBuilder.com',
-            [application.candidate.email],
-            fail_silently=False,
-        )
+        # if the person is actually the project owner then accept/reject
+        if application.position.project.owner == self.request.user:
+            decision = self.kwargs.get('decision')
+            application.status = decision
+            if decision == 'Accepted':
+                application.position.filled = True
+                application.position.save()
+
+            application.save()
+            send_mail(
+                'Decision',
+                'Your application has been {}'.format(decision),
+                'TeamBuilder.com',
+                [application.candidate.email],
+                fail_silently=False,
+            )
         return super().get(request, *args, **kwargs)
 
