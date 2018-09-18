@@ -65,8 +65,6 @@ class User(AbstractBaseUser, PermissionsMixin):
         return reverse('accounts:profile', kwargs={'pk': self.pk})
 
 
-
-
 class Skill(models.Model):
     name = models.CharField(max_length=40)
 

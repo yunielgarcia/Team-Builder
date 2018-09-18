@@ -68,6 +68,10 @@ class UpdateProjectPositionView(LoginRequiredMixin, generic.UpdateView):
     model = models.Project
     template_name = "projects/project_edit_form.html"
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(owner__pk=self.request.user.pk)
+
     def get_success_url(self):
         return reverse_lazy('projects:detail_project', kwargs={'pk': self.object.pk})
 
