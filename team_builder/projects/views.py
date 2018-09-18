@@ -180,3 +180,12 @@ class AcceptRejectApplicationView(LoginRequiredMixin, generic.RedirectView):
             )
         return super().get(request, *args, **kwargs)
 
+
+class DeleteProjectView(LoginRequiredMixin, generic.DeleteView):
+    model = models.Project
+    template_name = 'projects/confirm_delete.html'
+    success_url = reverse_lazy('projects:all')
+
+    def delete(self, *args, **kwargs):
+        messages.success(self.request, "Successfully deleted")
+        return super().delete(*args, **kwargs)

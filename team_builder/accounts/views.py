@@ -42,11 +42,7 @@ def account_redirect(request):
 class ProfileEditView(LoginRequiredMixin, generic.UpdateView):
     model = models.User
     template_name_suffix = '_update_form'
-    fields = [
-        'display_name',
-        'bio',
-        'avatar'
-    ]
+    form_class = forms.EditProfileForm
 
     def get_success_url(self):
         return self.request.user.get_absolute_url()

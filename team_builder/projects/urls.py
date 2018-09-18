@@ -32,4 +32,6 @@ urlpatterns = [
         r"applications/(?P<pk>\d+)/decision/(?P<decision>\w+)$",
         views.AcceptRejectApplicationView.as_view(),
         name="application_decision"),
+    url(r'delete/(?P<pk>\d+)$', views.DeleteProjectView.as_view(),
+        name='delete'),
 ]

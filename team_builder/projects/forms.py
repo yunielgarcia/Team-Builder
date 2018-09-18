@@ -53,5 +53,5 @@ PositionFormSet = inlineformset_factory(models.Project,
 PositionEditFormSet = inlineformset_factory(models.Project,
                                             models.Position,
                                             form=PositionForm,
-                                            extra=0,
+                                            extra=1,
                                             can_delete=True)
