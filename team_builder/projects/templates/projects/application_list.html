@@ -12,10 +12,9 @@
             <div class="circle--filter circle--secondary--module">
                 <h4>Status</h4>
                 <ul class="circle--filter--list">
-                    <li><a class="selected">All Applications</a></li>
-                    <li><a class="selected">New Applications</a></li>
-                    <li><a class="selected">Accepted</a></li>
-                    <li><a class="selected">Rejected</a></li>
+                    <li><a href="{% url 'projects:applications' %}" class="selected">All Applications</a></li>
+                    <li><a href="?status=Accepted" class="selected">Accepted</a></li>
+                    <li><a href="?status=Rejected" class="selected">Rejected</a></li>
                 </ul>
             </div>
             <div class="circle--filter circle--secondary--module">
@@ -42,7 +41,11 @@
                 {% for application in application_list %}
                     <tr class="clickable-row" data-href="{% url 'projects:application_detail' pk=application.pk %}">
                         <td>
-                            <h3>{{ application.candidate.username }}</h3>
+                            {% if  application.candidate.display_name %}
+                                <h3>{{ application.candidate.display_name }}</h3>
+                            {% else %}
+                                <h3> {{ application.candidate.email }} </h3>
+                            {% endif %}
                             {% for skill in application.candidate.user_skill_rel.all %}
                                 <p>{{ skill.skill }}</p>
                             {% endfor %}
